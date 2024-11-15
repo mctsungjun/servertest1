@@ -6,26 +6,20 @@ const fs = require('fs');
 
 const cors = require('cors');
 //로컬설정
-let corsOption = {
-  origin: 'http://vuenode:80', // 허락하는 요청 주소
-  credentials: true // true로 하면 설정한 내용을 response 헤더에 추가 해줍니다.
-}
+const allowedOrigins = [
+  'https://web-vuedepoytest-m3cudz5w505940d1.sel4.cloudtype.app', // 현재 프론트엔드 도메인
+  'https://web-vuenode-m3cudz5w505940d1.sel4.cloudtype.app' // 추가 도메인
+];
 
-// 배포시
-// let corsOption = {
-//     origin: 'https://web-vuenode-m3cudz5w505940d1.sel4.cloudtype.app', // Vue 앱이 배포된 주소
-//     credentials: true, // 쿠키 등을 포함하려면 true로 설정
-//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // 허용할 HTTP 메서드
-//     allowedHeaders: ['Content-Type', 'Authorization'] // 허용할 요청 헤더
-//   };
-
-//   app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', 'https://web-vuenode-m3cudz5w505940d1.sel4.cloudtype.app');  // 허용할 출처
-//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');  // 허용할 헤더
-//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');  // 허용할 메서드
-//     res.header('Access-Control-Allow-Credentials', 'true');  // 세션 쿠키 등 인증 정보 허용
-//     next();
-//   });
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
 
 app.use(cors(corsOption)); // CORS 미들웨어 추가
 // app.use(express.json())
