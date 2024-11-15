@@ -21,7 +21,7 @@ app.use(cors({
   }
 }));
 
-app.use(cors(corsOption)); // CORS 미들웨어 추가
+// app.use(cors(corsOption)); // CORS 미들웨어 추가
 // app.use(express.json())
 app.use(session({
     secret: 'secret code',
